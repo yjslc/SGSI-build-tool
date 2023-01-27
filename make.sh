@@ -164,7 +164,15 @@ if [ -e ./system.new.dat.1 ];then
     python $bin/sdat2img.py vendor.transfer.list vendor.new.dat ./vendor.img
     mv ./vendor.img ../
   fi
-
+  
+  if [ -e ./product.new.dat.br ];then
+    echo "正在解压product.new.br"
+    $bin/brotli -d product.new.dat.br
+    python $bin/sdat2img.py product.transfer.list product.new.dat ./product.img
+    mv ./product.img ../
+    rm -rf ./product.new.dat
+  fi
+  
   if [ -e ./product.new.dat.1 ];then
     echo "检测到分段product.new.dat，正在合并"
     cat ./product.new.dat.{1..999} 2>/dev/null >> ./product.new.dat
